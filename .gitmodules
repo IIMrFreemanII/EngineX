@@ -1,0 +1,13 @@
+[submodule "EngineX/vendor/GLFW"]
+	path = EngineX/vendor/GLFW
+	url = https://github.com/IIMrFreemanII/glfw
+[submodule "EngineX/vendor/imgui"]
+	path = EngineX/vendor/imgui
+	url = https://github.com/IIMrFreemanII/imgui
+	branch = docking
+[submodule "EngineX/vendor/glm"]
+	path = EngineX/vendor/glm
+	url = https://github.com/g-truc/glm
+[submodule "EngineX/vendor/spdlog"]
+	path = EngineX/vendor/spdlog
+	url = https://github.com/gabime/spdlog
