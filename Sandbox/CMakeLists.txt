@@ -5,6 +5,11 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(SOURCE_FILES main.cpp)
 
+if (${MSVC})
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+    set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+endif()
+
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 target_include_directories(

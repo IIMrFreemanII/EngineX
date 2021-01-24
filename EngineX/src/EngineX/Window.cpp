@@ -47,6 +47,16 @@ namespace EngineX
             props.Height = height;
         });
 
+//        glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
+//        {
+//            WindowProps& props = *(WindowProps*) glfwGetWindowUserPointer(window);
+//            // make sure the viewport matches the new window dimensions; note that width and
+//            // height will be significantly larger than specified on retina displays.
+//            props.Width = width;
+//            props.Height = height;
+//            glViewport(0, 0, width, height);
+//        });
+
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
             WindowProps& props = *(WindowProps*) glfwGetWindowUserPointer(window);
         });
@@ -71,6 +81,7 @@ namespace EngineX
     void Window::Shutdown()
     {
         glfwDestroyWindow(m_Window);
+        glfwTerminate();
     }
 
     void Window::SetVSync(bool enabled)

@@ -11,7 +11,22 @@ set(SOURCE_FILES
         src/EngineX/Application.h
         src/EngineX/Window.h
         src/EngineX/Window.cpp
-        src/Platform/OpenGL/OpenGLContext.cpp src/Platform/OpenGL/OpenGLContext.h src/EngineX/Log.cpp src/EngineX/Log.h src/EngineX/Renderer/GraphicsContext.h)
+        src/Platform/OpenGL/OpenGLContext.cpp
+        src/Platform/OpenGL/OpenGLContext.h
+        src/EngineX/Log.cpp
+        src/EngineX/Log.h
+        src/EngineX/Renderer/GraphicsContext.h
+        src/EngineX/ImGui/ImGuiBuild.cpp
+        src/EngineX/Editor/Editor.cpp
+        src/EngineX/Editor/Editor.h
+        src/Platform/OpenGL/OpenGLRendererAPI.cpp src/Platform/OpenGL/OpenGLRendererAPI.h src/Platform/OpenGL/OpenGLRenderer.cpp src/Platform/OpenGL/OpenGLRenderer.h)
+
+if (${MSVC})
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+    set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+endif()
+
+message(STATUS "${PROJECT_NAME} ${CMAKE_CXX_FLAGS}")
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "GLFW lib only")
 set(GLFW_INSTALL OFF CACHE BOOL "GLFW lib only")
