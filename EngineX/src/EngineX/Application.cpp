@@ -9,6 +9,8 @@ namespace EngineX {
 
     Application::Application()
     {
+        EX_PROFILE_BEGIN_SESSION("EngineXSession", "EngineXProfile.json");
+
         if (s_Instance) {
             EX_CORE_ERROR("Application already exists!");
             return;
@@ -25,7 +27,9 @@ namespace EngineX {
         m_Editor = std::make_unique<Editor>();
     }
 
-    Application::~Application() {}
+    Application::~Application() {
+        EX_PROFILE_END_SESSION();
+    }
 
     void Application::Run() {
         while (!glfwWindowShouldClose((GLFWwindow*)m_Window->GetNativeWindow())) {

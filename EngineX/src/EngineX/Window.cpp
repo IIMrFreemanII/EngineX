@@ -69,6 +69,8 @@ namespace EngineX
 
     void Window::OnUpdate()
     {
+        EX_PROFILE_FUNCTION();
+
         glfwPollEvents();
         m_Context->SwapBuffers();
     }

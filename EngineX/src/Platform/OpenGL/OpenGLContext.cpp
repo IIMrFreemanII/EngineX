@@ -26,6 +26,8 @@ namespace EngineX {
     }
 
     void OpenGLContext::SwapBuffers() {
+        EX_PROFILE_FUNCTION();
+
         glfwSwapBuffers(m_WindowHandle);
     }
 }

@@ -135,6 +135,8 @@ namespace EngineX {
 
     void OpenGLRenderer::OnUpdate()
     {
+        EX_PROFILE_FUNCTION();
+
         BeginScene();
 
         Application& app = Application::Get();
@@ -172,6 +174,8 @@ namespace EngineX {
 
     void OpenGLRenderer::ResizeFrameBuffer(unsigned int width, unsigned int height) const
     {
+        EX_PROFILE_FUNCTION();
+
         glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
         glBindTexture(GL_TEXTURE_2D, textureColorBuffer);

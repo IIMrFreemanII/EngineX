@@ -19,7 +19,13 @@ set(SOURCE_FILES
         src/EngineX/ImGui/ImGuiBuild.cpp
         src/EngineX/Editor/Editor.cpp
         src/EngineX/Editor/Editor.h
-        src/Platform/OpenGL/OpenGLRendererAPI.cpp src/Platform/OpenGL/OpenGLRendererAPI.h src/Platform/OpenGL/OpenGLRenderer.cpp src/Platform/OpenGL/OpenGLRenderer.h)
+        src/Platform/OpenGL/OpenGLRendererAPI.cpp
+        src/Platform/OpenGL/OpenGLRendererAPI.h
+        src/Platform/OpenGL/OpenGLRenderer.cpp
+        src/Platform/OpenGL/OpenGLRenderer.h
+        src/EngineX/Debug/Profiling/Instrumentor.h
+        src/exconfig.h
+        )
 
 if (${MSVC})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
@@ -51,3 +57,5 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} glfw Glad ImGui opengl32)
+
+target_precompile_headers(${PROJECT_NAME} PUBLIC src/expch.h)
