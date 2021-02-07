@@ -54,4 +54,9 @@ namespace EngineX {
             //---------------
         }
     }
+
+    void Application::Close()
+    {
+        glfwSetWindowShouldClose(m_Window->GetNativeWindow(), GL_TRUE);
+    }
 }

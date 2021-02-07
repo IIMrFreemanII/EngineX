@@ -3,7 +3,6 @@
 #include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
-#include "EngineX/Log.h"
 
 #include "EngineX/Application.h"
 
@@ -64,7 +63,7 @@ namespace EngineX
 
         if (ImGui::BeginMainMenuBar()) {
             if (ImGui::BeginMenu("File")) {
-                if (ImGui::MenuItem("Exit")) glfwSetWindowShouldClose(Application::Get().GetWindow().GetNativeWindow(), GL_TRUE);
+                if (ImGui::MenuItem("Exit")) Application::Get().Close();
 
                 ImGui::EndMenu();
             }

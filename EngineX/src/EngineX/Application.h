@@ -12,6 +12,7 @@ namespace EngineX {
         ~Application();
 
         void Run();
+        void Close();
 
         inline Window& GetWindow() const { return *m_Window; }
         inline OpenGLRenderer& GetRenderer() const { return *m_Renderer; }
