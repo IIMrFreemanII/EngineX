@@ -80,15 +80,19 @@ namespace EngineX
             ImVec2 sceneSize = ImGui::GetContentRegionAvail();
             sceneEditor->SetSize({sceneSize.x, sceneSize.y});
 
-            ImVec2 pos = ImGui::GetCursorScreenPos();
 
-            ImDrawList* drawList = ImGui::GetWindowDrawList();
-            drawList->AddImage((void*)Application::Get().GetRenderer().GetTextureColorBuffer(),
-                               pos,
-                               ImVec2(pos.x + sceneSize.x, pos.y + sceneSize.y),
-                               ImVec2(0, 1),
-                               ImVec2(1, 0)
-            );
+            uint32_t textureID = Application::Get().GetRenderer().GetTextureColorBuffer();
+            ImGui::Image((void*)textureID, sceneSize, ImVec2(0, 1), ImVec2(1, 0));
+
+            // another way to do the same
+//            ImVec2 pos = ImGui::GetCursorScreenPos();
+//            ImDrawList* drawList = ImGui::GetWindowDrawList();
+//            drawList->AddImage((void*)textureID,
+//                               pos,
+//                               ImVec2(pos.x + sceneSize.x, pos.y + sceneSize.y),
+//                               ImVec2(0, 1),
+//                               ImVec2(1, 0)
+//            );
         }
         ImGui::End();
         ImGui::PopStyleVar(1);
