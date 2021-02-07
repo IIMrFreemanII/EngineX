@@ -25,7 +25,7 @@ set(SOURCE_FILES
         src/Platform/OpenGL/OpenGLRenderer.h
         src/EngineX/Debug/Profiling/Instrumentor.h
         src/exconfig.h
-        )
+        src/EngineX/Editor/SceneEditor.cpp src/EngineX/Editor/SceneEditor.h)
 
 if (${MSVC})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")

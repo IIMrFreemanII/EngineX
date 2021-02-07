@@ -31,7 +31,7 @@ namespace EngineX
 
         inline unsigned int GetWidth() const { return m_Props.Width; };
         inline unsigned int GetHeight() const { return m_Props.Height; };
-        inline void* GetNativeWindow() const { return m_Window; };
+        inline GLFWwindow* GetNativeWindow() const { return m_Window; };
 
         void SetVSync(bool enabled);
         bool IsVSync() const;

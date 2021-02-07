@@ -97,14 +97,14 @@ namespace EngineX {
         // create a color attachment texture
         glGenTextures(1, &textureColorBuffer);
         glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, framebufferSize.x, framebufferSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0);
         // create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
         glGenRenderbuffers(1, &rbo);
         glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 512, 512); // use a single renderbuffer object for both a depth AND stencil buffer.
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, framebufferSize.x, framebufferSize.y); // use a single renderbuffer object for both a depth AND stencil buffer.
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
         // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -142,14 +142,15 @@ namespace EngineX {
         Application& app = Application::Get();
         Editor& editor = app.GetEditor();
         Window& window = app.GetWindow();
-        unsigned int sceneWidth = editor.sceneEditor->Width;
-        unsigned int sceneHeight = editor.sceneEditor->Height;
+        glm::vec2& sceneSize = editor.sceneEditor->Size;
 
-        ResizeFrameBuffer(sceneWidth, sceneHeight);
+        if (sceneSize != framebufferSize) {
+            ResizeFrameBuffer(sceneSize);
+        }
 
         // bind to framebuffer and draw scene as we normally would to color texture
         glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-        glViewport(0, 0, sceneWidth, sceneHeight);
+        glViewport(0, 0, sceneSize.x, sceneSize.y);
 
         // make sure we clear the framebuffer's content
         m_RenderAPI.SetClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
@@ -172,18 +173,19 @@ namespace EngineX {
         EndScene();
     }
 
-    void OpenGLRenderer::ResizeFrameBuffer(unsigned int width, unsigned int height) const
+    void OpenGLRenderer::ResizeFrameBuffer(const glm::vec2& size)
     {
         EX_PROFILE_FUNCTION();
+        framebufferSize = size;
 
         glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
         glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, size.x, size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
         glBindTexture(GL_TEXTURE_2D, 0);
 
         glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, size.x, size.y);
         glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);

@@ -38,7 +38,7 @@ namespace EngineX
         }
 
         Application& app = Application::Get();
-        GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+        GLFWwindow* window = app.GetWindow().GetNativeWindow();
 
         // Setup Platform/Renderer bindings
         ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -60,10 +60,17 @@ namespace EngineX
     {
         EX_PROFILE_FUNCTION();
 
-//        ImGuiID dockSpaceId = ImGui::GetID("MyDockSpace");
-//        ImGui::DockSpace(dockSpaceId);
-
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+
+        if (ImGui::BeginMainMenuBar()) {
+            if (ImGui::BeginMenu("File")) {
+                if (ImGui::MenuItem("Exit")) glfwSetWindowShouldClose(Application::Get().GetWindow().GetNativeWindow(), GL_TRUE);
+
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMainMenuBar();
+        }
 
         static bool show = true;
         ImGui::ShowDemoWindow(&show);
@@ -71,17 +78,15 @@ namespace EngineX
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
         ImGui::Begin("Scene");
         {
-            sceneEditor->Width = (int)ImGui::GetWindowWidth();
-            sceneEditor->Height = (int)ImGui::GetWindowHeight();
-
-//            EX_CORE_INFO("Scene width: {0}, height: {1}", sceneEditor->Width, sceneEditor->Height);
+            ImVec2 sceneSize = ImGui::GetContentRegionAvail();
+            sceneEditor->SetSize({sceneSize.x, sceneSize.y});
 
             ImVec2 pos = ImGui::GetCursorScreenPos();
 
             ImDrawList* drawList = ImGui::GetWindowDrawList();
             drawList->AddImage((void*)Application::Get().GetRenderer().GetTextureColorBuffer(),
                                pos,
-                               ImVec2(pos.x + (float)sceneEditor->Width, pos.y + (float)sceneEditor->Height),
+                               ImVec2(pos.x + sceneSize.x, pos.y + sceneSize.y),
                                ImVec2(0, 1),
                                ImVec2(1, 0)
             );

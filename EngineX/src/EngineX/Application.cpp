@@ -32,7 +32,7 @@ namespace EngineX {
     }
 
     void Application::Run() {
-        while (!glfwWindowShouldClose((GLFWwindow*)m_Window->GetNativeWindow())) {
+        while (!glfwWindowShouldClose(m_Window->GetNativeWindow())) {
             // handle time
             float currentFrame = glfwGetTime();
             float deltaTime = currentFrame - m_LastFrameTime;

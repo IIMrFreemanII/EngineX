@@ -23,11 +23,12 @@ namespace EngineX {
         unsigned int shaderProgram;
         unsigned int VBO, VAO;
 
+        glm::vec2 framebufferSize = {0.0f, 0.0f};
         unsigned int framebuffer;
         unsigned int textureColorBuffer;
         unsigned int rbo;
 
     private:
-        void ResizeFrameBuffer(unsigned int width, unsigned int height) const;
+        void ResizeFrameBuffer(const glm::vec2& size);
     };
 }
