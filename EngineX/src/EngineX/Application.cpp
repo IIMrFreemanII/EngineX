@@ -32,26 +32,29 @@ namespace EngineX {
 
     void Application::Run() {
         while (!glfwWindowShouldClose(m_Window->GetNativeWindow())) {
-            // handle time
-            float currentFrame = glfwGetTime();
-            float deltaTime = currentFrame - m_LastFrameTime;
-            m_LastFrameTime = currentFrame;
-            //----------------
-
-            // handle render
-            m_Renderer->OnUpdate();
-            //-----------------
-
-            // handle editor
-            m_Editor->Begin();
-            m_Editor->OnImGuiRender();
-            m_Editor->End();
-            //--------------
-
-            // handle window
-            m_Window->OnUpdate();
-            //---------------
+            OnUpdate();
         }
+    }
+
+    void Application::OnUpdate()
+    {
+        // handle time
+        float currentFrame = glfwGetTime();
+        float deltaTime = currentFrame - m_LastFrameTime;
+        m_LastFrameTime = currentFrame;
+        //----------------
+
+        // handle render
+        m_Renderer->OnUpdate();
+        //-----------------
+
+        // handle editor
+        m_Editor->OnImGuiRender();
+        //--------------
+
+        // handle window
+        m_Window->OnUpdate();
+        //---------------
     }
 
     void Application::Close()

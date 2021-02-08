@@ -1,5 +1,4 @@
 #include "OpenGLContext.h"
-#include "EngineX/Log.h"
 #include "glad/glad.h"
 
 namespace EngineX {

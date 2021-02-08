@@ -19,6 +19,8 @@ namespace EngineX {
         inline Editor& GetEditor() const { return *m_Editor; }
         inline static Application& Get() { return *s_Instance; }
 
+        void OnUpdate();
+
     private:
         std::unique_ptr<Window> m_Window;
         std::unique_ptr<Editor> m_Editor;

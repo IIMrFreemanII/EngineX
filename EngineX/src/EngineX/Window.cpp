@@ -1,6 +1,6 @@
 #include "Window.h"
-#include "Log.h"
 
+#include "Application.h"
 #include "Platform/OpenGL/OpenGLContext.h"
 
 #include <iostream>
@@ -42,9 +42,10 @@ namespace EngineX
 
         glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
             WindowProps& props = *(WindowProps*) glfwGetWindowUserPointer(window);
-
             props.Width = width;
             props.Height = height;
+
+            Application::Get().OnUpdate();
         });
 
 //        glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)

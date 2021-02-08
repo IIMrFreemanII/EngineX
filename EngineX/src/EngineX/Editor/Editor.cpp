@@ -58,6 +58,7 @@ namespace EngineX
     void Editor::OnImGuiRender()
     {
         EX_PROFILE_FUNCTION();
+        Begin();
 
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
@@ -95,6 +96,8 @@ namespace EngineX
         }
         ImGui::End();
         ImGui::PopStyleVar(1);
+
+        End();
     }
 
     void Editor::Begin()
