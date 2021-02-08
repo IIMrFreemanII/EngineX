@@ -80,8 +80,7 @@ namespace EngineX
             ImVec2 sceneSize = ImGui::GetContentRegionAvail();
             sceneEditor->SetSize({sceneSize.x, sceneSize.y});
 
-
-            uint32_t textureID = Application::Get().GetRenderer().GetTextureColorBuffer();
+            uint32_t textureID = Application::Get().GetRenderer().GetFrameBuffer().GetTextureColorBuffer();
             ImGui::Image((void*)textureID, sceneSize, ImVec2(0, 1), ImVec2(1, 0));
 
             // another way to do the same

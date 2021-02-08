@@ -6,7 +6,7 @@ namespace EngineX {
     class OpenGLRendererAPI {
     public:
         OpenGLRendererAPI();
-        ~OpenGLRendererAPI();
+        ~OpenGLRendererAPI() = default;
 
         void SetClearColor(const glm::vec4& color);
         void Clear();

@@ -1,7 +1,6 @@
 #include "Application.h"
 
 #include <memory>
-#include "Log.h"
 
 namespace EngineX {
 

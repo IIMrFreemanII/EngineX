@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(SOURCE_FILES
         src/EngineX.h
+        src/exconfig.h
+        src/expch.h
         vendor/stb_image/stb_image.cpp
         vendor/stb_image/stb_image.h
         src/EngineX/Application.cpp
@@ -24,8 +26,10 @@ set(SOURCE_FILES
         src/Platform/OpenGL/OpenGLRenderer.cpp
         src/Platform/OpenGL/OpenGLRenderer.h
         src/EngineX/Debug/Profiling/Instrumentor.h
-        src/exconfig.h
-        src/EngineX/Editor/SceneEditor.cpp src/EngineX/Editor/SceneEditor.h)
+        src/EngineX/Editor/SceneEditor.cpp
+        src/EngineX/Editor/SceneEditor.h
+        src/EngineX/Core.h
+        src/Platform/OpenGL/OpenGLFrameBuffer.cpp src/Platform/OpenGL/OpenGLFrameBuffer.h)
 
 if (${MSVC})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")

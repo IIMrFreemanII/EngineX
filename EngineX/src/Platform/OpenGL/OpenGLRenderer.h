@@ -1,8 +1,8 @@
 #pragma once
 
 #include "OpenGLRendererAPI.h"
-#include <memory>
 #include "glm/glm.hpp"
+#include "OpenGLFrameBuffer.h"
 
 namespace EngineX {
 
@@ -15,20 +15,14 @@ namespace EngineX {
         void EndScene();
         void OnUpdate();
 
-        inline unsigned int GetTextureColorBuffer() const { return textureColorBuffer; };
+        inline OpenGLFrameBuffer& GetFrameBuffer() { return *m_FrameBuffer; }
 
     private:
         OpenGLRendererAPI m_RenderAPI;
+        Scope<OpenGLFrameBuffer> m_FrameBuffer;
+
         glm::vec4 m_ClearColor;
         unsigned int shaderProgram;
         unsigned int VBO, VAO;
-
-        glm::vec2 framebufferSize = {0.0f, 0.0f};
-        unsigned int framebuffer;
-        unsigned int textureColorBuffer;
-        unsigned int rbo;
-
-    private:
-        void ResizeFrameBuffer(const glm::vec2& size);
     };
 }
