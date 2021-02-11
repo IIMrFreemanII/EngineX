@@ -9,8 +9,6 @@ namespace EngineX {
     {
         EX_PROFILE_FUNCTION();
 
-        EX_CORE_INFO("Framebuffer constructor configuration");
-
         // framebuffer configuration
         // -------------------------
         glGenFramebuffers(1, &m_Config.frameBuffer);
