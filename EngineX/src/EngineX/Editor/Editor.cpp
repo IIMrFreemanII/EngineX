@@ -13,7 +13,7 @@ namespace EngineX
     {
         EX_PROFILE_FUNCTION();
 
-// Setup Dear ImGui context
+        // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO();
@@ -75,27 +75,7 @@ namespace EngineX
         static bool show = true;
         ImGui::ShowDemoWindow(&show);
 
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-        ImGui::Begin("Scene");
-        {
-            ImVec2 sceneSize = ImGui::GetContentRegionAvail();
-            sceneEditor->SetSize({sceneSize.x, sceneSize.y});
-
-            uint32_t textureID = Application::Get().GetRenderer().GetFrameBuffer().GetTextureColorBuffer();
-            ImGui::Image((void*)textureID, sceneSize, ImVec2(0, 1), ImVec2(1, 0));
-
-            // another way to do the same
-//            ImVec2 pos = ImGui::GetCursorScreenPos();
-//            ImDrawList* drawList = ImGui::GetWindowDrawList();
-//            drawList->AddImage((void*)textureID,
-//                               pos,
-//                               ImVec2(pos.x + sceneSize.x, pos.y + sceneSize.y),
-//                               ImVec2(0, 1),
-//                               ImVec2(1, 0)
-//            );
-        }
-        ImGui::End();
-        ImGui::PopStyleVar(1);
+        sceneEditor->OnImGuiRender();
 
         End();
     }

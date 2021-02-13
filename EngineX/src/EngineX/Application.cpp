@@ -1,6 +1,7 @@
 #include "Application.h"
 
 #include <memory>
+#include <glad/glad.h>
 
 namespace EngineX {
 
@@ -22,7 +23,7 @@ namespace EngineX {
         EX_WARN("Welcome to Sandbox App!");
 
         m_Window = std::make_unique<Window>(WindowProps());
-        m_Renderer = std::make_unique<OpenGLRenderer>();
+        m_Scene = std::make_unique<Scene>();
         m_Editor = std::make_unique<Editor>();
     }
 
@@ -44,8 +45,8 @@ namespace EngineX {
         m_LastFrameTime = currentFrame;
         //----------------
 
-        // handle render
-        m_Renderer->OnUpdate();
+        //  handle render
+        m_Scene->OnUpdate();
         //-----------------
 
         // handle editor

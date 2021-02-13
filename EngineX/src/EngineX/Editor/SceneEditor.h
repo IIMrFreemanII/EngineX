@@ -15,6 +15,7 @@ namespace EngineX {
         SceneEditor(const std::string& title = "Scene", const glm::vec2& size = {0.0f, 0.0f});
 
         void SetSize(const glm::vec2& size);
+        void OnImGuiRender();
 
     };
 
