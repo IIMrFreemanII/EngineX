@@ -23,12 +23,12 @@ namespace EngineX {
         Ref<OpenGLVertexBuffer> vertexBuffer;
         vertexBuffer.reset(OpenGLVertexBuffer::Create(vertices, sizeof(vertices)));
         OpenGLBufferLayout layout = {
-                { ShaderDataType::Float3, "aPos" }
+                { OpenGLShaderDataType::Float3, "aPos" }
         };
         vertexBuffer->SetLayout(layout);
         m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-        uint32_t indices[] = { 0, 1,  2};
+        uint32_t indices[] = { 0, 1, 2};
         Ref<OpenGLIndexBuffer> indexBuffer;
         indexBuffer.reset(OpenGLIndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
         m_VertexArray->SetIndexBuffer(indexBuffer);
@@ -64,10 +64,14 @@ namespace EngineX {
         OpenGLRenderer::SetViewport(0, 0, sceneSize.x, sceneSize.y);
         OpenGLRenderer::SetClearColor(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
         OpenGLRenderer::Clear();
+
+        OpenGLRenderer::Begin();
     }
 
     void Scene::End()
     {
+        OpenGLRenderer::End();
+
         m_FrameBuffer->UnBind();
     }
 
@@ -75,11 +79,7 @@ namespace EngineX {
     {
         Begin();
 
-        OpenGLRenderer::BeginScene();
-        {
-            OpenGLRenderer::Submit(m_Shader, m_VertexArray);
-        }
-        OpenGLRenderer::EndScene();
+        OpenGLRenderer::Submit(m_Shader, m_VertexArray);
 
         End();
     }

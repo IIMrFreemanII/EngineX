@@ -3,21 +3,21 @@
 
 namespace EngineX {
 
-    static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+    static GLenum ShaderDataTypeToOpenGLBaseType(OpenGLShaderDataType type)
     {
         switch (type)
         {
-            case EngineX::ShaderDataType::Float:    return GL_FLOAT;
-            case EngineX::ShaderDataType::Float2:   return GL_FLOAT;
-            case EngineX::ShaderDataType::Float3:   return GL_FLOAT;
-            case EngineX::ShaderDataType::Float4:   return GL_FLOAT;
-            case EngineX::ShaderDataType::Mat3:     return GL_FLOAT;
-            case EngineX::ShaderDataType::Mat4:     return GL_FLOAT;
-            case EngineX::ShaderDataType::Int:      return GL_INT;
-            case EngineX::ShaderDataType::Int2:     return GL_INT;
-            case EngineX::ShaderDataType::Int3:     return GL_INT;
-            case EngineX::ShaderDataType::Int4:     return GL_INT;
-            case EngineX::ShaderDataType::Bool:     return GL_BOOL;
+            case OpenGLShaderDataType::Float:    return GL_FLOAT;
+            case OpenGLShaderDataType::Float2:   return GL_FLOAT;
+            case OpenGLShaderDataType::Float3:   return GL_FLOAT;
+            case OpenGLShaderDataType::Float4:   return GL_FLOAT;
+            case OpenGLShaderDataType::Mat3:     return GL_FLOAT;
+            case OpenGLShaderDataType::Mat4:     return GL_FLOAT;
+            case OpenGLShaderDataType::Int:      return GL_INT;
+            case OpenGLShaderDataType::Int2:     return GL_INT;
+            case OpenGLShaderDataType::Int3:     return GL_INT;
+            case OpenGLShaderDataType::Int4:     return GL_INT;
+            case OpenGLShaderDataType::Bool:     return GL_BOOL;
         }
 
         EX_CORE_ASSERT(false, "Unknown ShaderDataType!");

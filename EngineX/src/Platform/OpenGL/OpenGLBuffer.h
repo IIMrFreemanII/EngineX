@@ -2,26 +2,26 @@
 
 namespace EngineX {
 
-    enum class ShaderDataType
+    enum class OpenGLShaderDataType
     {
         Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
     };
 
-    static uint32_t ShaderDataTypeSize(ShaderDataType type)
+    static uint32_t OpenGLShaderDataTypeSize(OpenGLShaderDataType type)
     {
         switch (type)
         {
-            case ShaderDataType::Float:    return 4;
-            case ShaderDataType::Float2:   return 4 * 2;
-            case ShaderDataType::Float3:   return 4 * 3;
-            case ShaderDataType::Float4:   return 4 * 4;
-            case ShaderDataType::Mat3:     return 4 * 3 * 3;
-            case ShaderDataType::Mat4:     return 4 * 4 * 4;
-            case ShaderDataType::Int:      return 4;
-            case ShaderDataType::Int2:     return 4 * 2;
-            case ShaderDataType::Int3:     return 4 * 3;
-            case ShaderDataType::Int4:     return 4 * 4;
-            case ShaderDataType::Bool:     return 1;
+            case OpenGLShaderDataType::Float:    return 4;
+            case OpenGLShaderDataType::Float2:   return 4 * 2;
+            case OpenGLShaderDataType::Float3:   return 4 * 3;
+            case OpenGLShaderDataType::Float4:   return 4 * 4;
+            case OpenGLShaderDataType::Mat3:     return 4 * 3 * 3;
+            case OpenGLShaderDataType::Mat4:     return 4 * 4 * 4;
+            case OpenGLShaderDataType::Int:      return 4;
+            case OpenGLShaderDataType::Int2:     return 4 * 2;
+            case OpenGLShaderDataType::Int3:     return 4 * 3;
+            case OpenGLShaderDataType::Int4:     return 4 * 4;
+            case OpenGLShaderDataType::Bool:     return 1;
         }
 
         EX_CORE_ASSERT(false, "Unknown ShaderDataType!");
@@ -30,15 +30,15 @@ namespace EngineX {
 
     struct OpenGLBufferElement {
         std::string Name;
-        ShaderDataType Type;
+        OpenGLShaderDataType Type;
         uint32_t Size;
         uint32_t Offset;
         bool Normalized;
 
         OpenGLBufferElement() {}
 
-        OpenGLBufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
-                : Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
+        OpenGLBufferElement(OpenGLShaderDataType type, const std::string& name, bool normalized = false)
+                : Name(name), Type(type), Size(OpenGLShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
         {
 
         }
@@ -46,17 +46,17 @@ namespace EngineX {
         uint32_t GetComponentCount() const {
             switch (Type)
             {
-                case ShaderDataType::Float:   return 1;
-                case ShaderDataType::Float2:  return 2;
-                case ShaderDataType::Float3:  return 3;
-                case ShaderDataType::Float4:  return 4;
-                case ShaderDataType::Mat3:    return 3 * 3;
-                case ShaderDataType::Mat4:    return 4 * 4;
-                case ShaderDataType::Int:     return 1;
-                case ShaderDataType::Int2:    return 2;
-                case ShaderDataType::Int3:    return 3;
-                case ShaderDataType::Int4:    return 4;
-                case ShaderDataType::Bool:    return 1;
+                case OpenGLShaderDataType::Float:   return 1;
+                case OpenGLShaderDataType::Float2:  return 2;
+                case OpenGLShaderDataType::Float3:  return 3;
+                case OpenGLShaderDataType::Float4:  return 4;
+                case OpenGLShaderDataType::Mat3:    return 3 * 3;
+                case OpenGLShaderDataType::Mat4:    return 4 * 4;
+                case OpenGLShaderDataType::Int:     return 1;
+                case OpenGLShaderDataType::Int2:    return 2;
+                case OpenGLShaderDataType::Int3:    return 3;
+                case OpenGLShaderDataType::Int4:    return 4;
+                case OpenGLShaderDataType::Bool:    return 1;
             }
 
             EX_CORE_ASSERT(false, "Unknown ShaderDataType!");
@@ -94,6 +94,7 @@ namespace EngineX {
                 m_Stride += element.Size;
             }
         }
+
     private:
         std::vector<OpenGLBufferElement> m_Elements;
         uint32_t m_Stride;
@@ -127,7 +128,7 @@ namespace EngineX {
         void Bind() const;
         void UnBind() const;
 
-        static OpenGLIndexBuffer* Create(uint32_t* indices, uint32_t size);
+        static OpenGLIndexBuffer* Create(uint32_t* indices, uint32_t count);
         uint32_t GetCount() const { return m_Count; }
 
     private:

@@ -5,12 +5,12 @@
 
 namespace EngineX {
 
-    void OpenGLRenderer::BeginScene()
+    void OpenGLRenderer::Begin()
     {
         // init scene data
     }
 
-    void OpenGLRenderer::EndScene()
+    void OpenGLRenderer::End()
     {
         // render submitted objects
     }

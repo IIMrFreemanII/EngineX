@@ -21,8 +21,6 @@ set(SOURCE_FILES
         src/EngineX/ImGui/ImGuiBuild.cpp
         src/EngineX/Editor/Editor.cpp
         src/EngineX/Editor/Editor.h
-        src/Platform/OpenGL/OpenGLRendererAPI.cpp
-        src/Platform/OpenGL/OpenGLRendererAPI.h
         src/Platform/OpenGL/OpenGLRenderer.cpp
         src/Platform/OpenGL/OpenGLRenderer.h
         src/EngineX/Debug/Profiling/Instrumentor.h

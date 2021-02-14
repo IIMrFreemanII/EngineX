@@ -21,10 +21,10 @@ namespace EngineX {
         ImGui::Begin("Scene");
         {
             ImVec2 sceneSize = ImGui::GetContentRegionAvail();
-            SetSize({sceneSize.x, sceneSize.y});
+            SetSize({ sceneSize.x, sceneSize.y });
 
             uint32_t textureID = Application::Get().GetScene().GetFrameBuffer().GetTextureColorBuffer();
-            ImGui::Image((void*)textureID, sceneSize, ImVec2(0, 1), ImVec2(1, 0));
+            ImGui::Image((void*)(uintptr_t)textureID, sceneSize, ImVec2(0, 1), ImVec2(1, 0));
 
             // another way to do the same
 //            ImVec2 pos = ImGui::GetCursorScreenPos();
