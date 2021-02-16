@@ -35,12 +35,8 @@ set(SOURCE_FILES
         src/Platform/OpenGL/OpenGLVertexArray.h
         src/Platform/OpenGL/OpenGLShader.cpp
         src/Platform/OpenGL/OpenGLShader.h
-        src/EngineX/Scene.cpp src/EngineX/Scene.h)
+        src/EngineX/Scene.cpp src/EngineX/Scene.h src/EngineX/Mesh.h src/EngineX/Vertex.h)
 
-if (${MSVC})
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
-    set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} /MP")
-endif()
 
 message(STATUS "${PROJECT_NAME} ${CMAKE_CXX_FLAGS}")
 

@@ -3,6 +3,7 @@
 #include "glm/glm.hpp"
 #include "OpenGLShader.h"
 #include "OpenGLVertexArray.h"
+#include "EngineX/Mesh.h"
 
 namespace EngineX {
 
@@ -17,7 +18,7 @@ namespace EngineX {
         static void End();
         static void Submit(
                 const Ref<OpenGLShader>& shader,
-                const Ref<OpenGLVertexArray>& vertexArray,
+                const Ref<Mesh>& mesh,
                 const glm::mat4& transform = glm::mat4(1.0f)
         );
     };

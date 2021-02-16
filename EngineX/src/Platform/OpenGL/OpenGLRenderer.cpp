@@ -43,7 +43,7 @@ namespace EngineX {
 
     void OpenGLRenderer::Submit(
             const Ref <OpenGLShader>& shader,
-            const Ref <OpenGLVertexArray>& vertexArray,
+            const Ref<Mesh>& mesh,
             const glm::mat4& transform
     )
     {
@@ -51,8 +51,8 @@ namespace EngineX {
         // set view and projection matrix for shader
         // set transform matrix for shader
 
-        vertexArray->Bind();
-        DrawIndexed(vertexArray);
+        mesh->m_VertexArray->Bind();
+        DrawIndexed(mesh->m_VertexArray);
     }
 
 }

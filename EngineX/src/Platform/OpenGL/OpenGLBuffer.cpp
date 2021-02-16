@@ -8,11 +8,11 @@ namespace EngineX {
     // VertexBuffer /////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
 
-    OpenGLVertexBuffer* OpenGLVertexBuffer::Create(float* vertices, uint32_t size) {
+    OpenGLVertexBuffer* OpenGLVertexBuffer::Create(const Vertex* vertices, uint32_t size) {
         return new OpenGLVertexBuffer(vertices, size);
     }
 
-    OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
+    OpenGLVertexBuffer::OpenGLVertexBuffer(const Vertex* vertices, uint32_t size)
     {
         glCreateBuffers(1, &m_RendererID);
         glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
@@ -38,11 +38,11 @@ namespace EngineX {
     // IndexBuffer //////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
 
-    OpenGLIndexBuffer* OpenGLIndexBuffer::Create(uint32_t* indices, uint32_t count) {
+    OpenGLIndexBuffer* OpenGLIndexBuffer::Create(const uint32_t* indices, uint32_t count) {
         return new OpenGLIndexBuffer(indices, count);
     }
 
-    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count)
+    OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* indices, uint32_t count)
             : m_Count(count)
     {
         glCreateBuffers(1, &m_RendererID);

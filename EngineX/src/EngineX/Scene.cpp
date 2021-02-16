@@ -12,29 +12,15 @@ namespace EngineX {
 
         m_FrameBuffer = std::make_unique<OpenGLFrameBuffer>(configuration);
 
-        m_VertexArray.reset(OpenGLVertexArray::Create());
-
-        float vertices[] =  {
-                -0.5f, -0.5f, 0.0f, // left
-                0.5f, -0.5f, 0.0f, // right
-                0.0f, 0.5f, 0.0f  // top
+        const std::vector<Vertex> vertices = {
+                { { -0.5f, -0.5f, 0.0f } }, // left
+                { { 0.5f, -0.5f, 0.0f } }, // right
+                { { 0.0f, 0.5f, 0.0f } }, // top
         };
+        const std::vector<uint32_t> indices = { 0, 1, 2};
 
-        Ref<OpenGLVertexBuffer> vertexBuffer;
-        vertexBuffer.reset(OpenGLVertexBuffer::Create(vertices, sizeof(vertices)));
-        OpenGLBufferLayout layout = {
-                { OpenGLShaderDataType::Float3, "aPos" }
-        };
-        vertexBuffer->SetLayout(layout);
-        m_VertexArray->AddVertexBuffer(vertexBuffer);
-
-        uint32_t indices[] = { 0, 1, 2};
-        Ref<OpenGLIndexBuffer> indexBuffer;
-        indexBuffer.reset(OpenGLIndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-        m_VertexArray->SetIndexBuffer(indexBuffer);
-
+        m_Mesh.reset(Mesh::Create(vertices, indices));
         m_Shader = OpenGLShader::Create("asset/shader/basic.glsl");
-
     }
 
     void Scene::Begin()
@@ -65,7 +51,7 @@ namespace EngineX {
     {
         Begin();
 
-        OpenGLRenderer::Submit(m_Shader, m_VertexArray);
+        OpenGLRenderer::Submit(m_Shader, m_Mesh);
 
         End();
     }

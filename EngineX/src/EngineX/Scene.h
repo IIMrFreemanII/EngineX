@@ -2,6 +2,7 @@
 #include "Platform/OpenGL/OpenGLFrameBuffer.h"
 #include "Platform/OpenGL/OpenGLVertexArray.h"
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "Mesh.h"
 
 namespace EngineX {
 
@@ -23,7 +24,7 @@ namespace EngineX {
 
     private:
         Ref<OpenGLShader> m_Shader;
-        Ref<OpenGLVertexArray> m_VertexArray;
+        Ref<Mesh> m_Mesh;
 
     };
 

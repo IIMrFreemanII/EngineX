@@ -1,5 +1,7 @@
 #pragma once
 
+#include "EngineX/Vertex.h"
+
 namespace EngineX {
 
     enum class OpenGLShaderDataType
@@ -103,7 +105,7 @@ namespace EngineX {
     class OpenGLVertexBuffer {
 
     public:
-        OpenGLVertexBuffer(float* vertices, uint32_t size);
+        OpenGLVertexBuffer(const Vertex* vertices, uint32_t size);
         ~OpenGLVertexBuffer();
 
         void Bind() const;
@@ -111,7 +113,7 @@ namespace EngineX {
 
         const OpenGLBufferLayout& GetLayout() const { return m_Layout; }
         void SetLayout(const OpenGLBufferLayout& layout) { m_Layout = layout; }
-        static OpenGLVertexBuffer* Create(float* vertices, uint32_t size);
+        static OpenGLVertexBuffer* Create(const Vertex* vertices, uint32_t size);
 
     private:
         uint32_t m_RendererID;
@@ -122,13 +124,13 @@ namespace EngineX {
     class OpenGLIndexBuffer {
 
     public:
-        OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
+        OpenGLIndexBuffer(const uint32_t* indices, uint32_t count);
         ~OpenGLIndexBuffer();
 
         void Bind() const;
         void UnBind() const;
 
-        static OpenGLIndexBuffer* Create(uint32_t* indices, uint32_t count);
+        static OpenGLIndexBuffer* Create(const uint32_t* indices, uint32_t count);
         uint32_t GetCount() const { return m_Count; }
 
     private:
