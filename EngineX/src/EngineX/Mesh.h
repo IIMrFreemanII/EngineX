@@ -38,6 +38,11 @@ namespace EngineX
             m_VertexArray->SetIndexBuffer(indexBuffer);
         }
 
+        // temp
+        Mesh(const Mesh& mesh) = delete;
+        // temp
+        Mesh& operator= (const Mesh& mesh) = delete;
+
         static Mesh* Create(const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices)
         {
             return new Mesh(vertices, indices);
