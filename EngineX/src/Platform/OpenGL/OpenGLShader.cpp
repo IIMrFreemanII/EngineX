@@ -5,7 +5,7 @@
 namespace EngineX
 {
 
-    static uint32_t ShaderTypeFromString(const std::string& type)
+    static uint32_t OpenGLShaderTypeFromString(const std::string& type)
     {
         if (type == "vertex")
             return GL_VERTEX_SHADER;
@@ -28,6 +28,8 @@ namespace EngineX
         auto lastDot = filepath.rfind('.');
         auto count = lastDot == std::string::npos ? filepath.size() - lastSlash : lastDot - lastSlash;
         m_Name = filepath.substr(lastSlash, count);
+
+        ExtractUniforms(source);
     }
 
     OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
@@ -37,6 +39,9 @@ namespace EngineX
         sources[GL_VERTEX_SHADER] = vertexSrc;
         sources[GL_FRAGMENT_SHADER] = fragmentSrc;
         Compile(sources);
+
+        ExtractUniforms(vertexSrc);
+        ExtractUniforms(fragmentSrc);
     }
 
     OpenGLShader::~OpenGLShader()
@@ -73,15 +78,22 @@ namespace EngineX
         size_t pos = source.find(typeToken, 0);
         while (pos != std::string::npos)
         {
+            // eol - end of line
+            // \r - return
+            // \n - new line
             size_t eol = source.find_first_of("\r\n", pos);
             EX_CORE_ASSERT(eol != std::string::npos, "Syntax error");
             size_t begin = pos + typeTokenLength + 1;
             std::string type = source.substr(begin, eol - begin);
-            EX_CORE_ASSERT(ShaderTypeFromString(type), "Invalid shader type specified");
+            EX_CORE_ASSERT(OpenGLShaderTypeFromString(type), "Invalid shader type specified");
 
             size_t nextLinePos = source.find_first_not_of("\r\n", eol);
             pos = source.find(typeToken, nextLinePos);
-            shaderSources[ShaderTypeFromString(type)] = source.substr(nextLinePos, pos - (nextLinePos == std::string::npos ? source.size() - 1 : nextLinePos));
+            shaderSources[OpenGLShaderTypeFromString(type)] =
+                    source.substr(
+                            nextLinePos,
+                            pos - (nextLinePos == std::string::npos ? source.size() - 1 : nextLinePos)
+                    );
         }
 
         return shaderSources;
@@ -101,7 +113,7 @@ namespace EngineX
             GLuint shader = glCreateShader(type);
 
             const GLchar* sourceCStr = source.c_str();
-            glShaderSource(shader, 1, &sourceCStr, 0);
+            glShaderSource(shader, 1, &sourceCStr, nullptr);
 
             glCompileShader(shader);
 
@@ -158,6 +170,28 @@ namespace EngineX
             glDetachShader(program, id);
     }
 
+    void OpenGLShader::ExtractUniforms(const std::string& source)
+    {
+        std::string uniformToken = "uniform";
+        size_t lastPos = 0;
+        while (lastPos != std::string::npos) {
+            size_t uniformTokenPos = source.find(uniformToken, lastPos);
+            size_t eof = source.find_first_of("\r\n", uniformTokenPos);
+            lastPos = eof;
+
+            if (uniformTokenPos == std::string::npos) break;
+
+            std::string line = source.substr(uniformTokenPos, eof - uniformTokenPos);
+            size_t spaceFromEndPos = line.find_last_of(' ');
+            size_t semicolonPos = line.find_last_of(';');
+
+            std::string uniformName = line.substr(spaceFromEndPos + 1, semicolonPos - spaceFromEndPos - 1);
+            int uniformLocation = glGetUniformLocation(m_RendererID, uniformName.c_str());
+            EX_CORE_ASSERT(uniformLocation != -1, "Failed to extract uniform location: " + uniformName + " of " + m_Name);
+            uniforms[uniformName] = uniformLocation;
+        }
+    }
+
     void OpenGLShader::Bind() const
     {
         glUseProgram(m_RendererID);
@@ -180,44 +214,37 @@ namespace EngineX
 
     void OpenGLShader::UploadUniformInt(const std::string& name, int value)
     {
-        GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-        glUniform1i(location, value);
+        glUniform1i(uniforms[name], value);
     }
 
     void OpenGLShader::UploadUniformFloat(const std::string& name, float value)
     {
-        GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-        glUniform1f(location, value);
+        glUniform1f(uniforms[name], value);
     }
 
     void OpenGLShader::UploadUniformFloat2(const std::string& name, const glm::vec2& value)
     {
-        GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-        glUniform2f(location, value.x, value.y);
+        glUniform2f(uniforms[name], value.x, value.y);
     }
 
     void OpenGLShader::UploadUniformFloat3(const std::string& name, const glm::vec3& value)
     {
-        GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-        glUniform3f(location, value.x, value.y, value.z);
+        glUniform3f(uniforms[name], value.x, value.y, value.z);
     }
 
     void OpenGLShader::UploadUniformFloat4(const std::string& name, const glm::vec4& value)
     {
-        GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-        glUniform4f(location, value.x, value.y, value.z, value.w);
+        glUniform4f(uniforms[name], value.x, value.y, value.z, value.w);
     }
 
     void OpenGLShader::UploadUniformMat3(const std::string& name, const glm::mat3& matrix)
     {
-        GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-        glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+        glUniformMatrix3fv(uniforms[name], 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
     void OpenGLShader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix)
     {
-        GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+        glUniformMatrix4fv(uniforms[name], 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
     std::unordered_map<std::string, Ref<OpenGLShader>> OpenGLShaderLibrary::s_Shaders = std::unordered_map<std::string, Ref<OpenGLShader>>();

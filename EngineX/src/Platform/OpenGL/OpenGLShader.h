@@ -36,10 +36,14 @@ namespace EngineX {
     private:
         std::string ReadFile(const std::string& filepath);
         std::unordered_map<uint32_t, std::string> PreProcess(const std::string& source);
+
         void Compile(const std::unordered_map<uint32_t, std::string>& shaderSources);
+
+        void ExtractUniforms(const std::string& source);
 
     private:
         uint32_t m_RendererID;
+        std::unordered_map<std::string, int> uniforms;
         std::string m_Name;
 
     };
