@@ -51,6 +51,22 @@ add_subdirectory(vendor/GLFW)
 add_subdirectory(vendor/Glad)
 add_subdirectory(vendor/imgui)
 
+#-----assimp setup----------------------------------------------
+
+set(BUILD_SHARED_LIBS OFF)
+set(ASSIMP_INSTALL OFF)
+set(ASSIMP_BUILD_TESTS OFF)
+
+set(ASSIMP_NO_EXPORT TRUE)
+set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT FALSE)
+
+set(ASSIMP_BUILD_FBX_IMPORTER TRUE)
+
+set(ASSIMP_IMPORTERS_ENABLED FBX)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/assimp)
+
+#---------------------------------------------------------------
+
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
 target_include_directories(${PROJECT_NAME}
@@ -61,11 +77,12 @@ target_include_directories(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui
         ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm
         ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb_image
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/assimp/include
 
         PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-target_link_libraries(${PROJECT_NAME} glfw Glad ImGui opengl32)
+target_link_libraries(${PROJECT_NAME} glfw Glad ImGui opengl32 assimp)
 
 target_precompile_headers(${PROJECT_NAME} PUBLIC src/expch.h)

@@ -11,3 +11,6 @@
 [submodule "EngineX/vendor/spdlog"]
 	path = EngineX/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "EngineX/vendor/assimp"]
+	path = EngineX/vendor/assimp
+	url = https://github.com/IIMrFreemanII/assimp
