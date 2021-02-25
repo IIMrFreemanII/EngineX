@@ -23,6 +23,9 @@ namespace EngineX {
 
         void OnUpdate();
 
+    public:
+        float deltaTime;
+
     private:
         Scope<Window> m_Window;
         Scope<Editor> m_Editor;

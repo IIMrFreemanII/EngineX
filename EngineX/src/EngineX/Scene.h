@@ -3,6 +3,9 @@
 #include "Platform/OpenGL/OpenGLVertexArray.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "Mesh.h"
+#include "EngineX/Camera.h"
+#include "Material.h"
+#include "DirectionLight.h"
 
 namespace EngineX {
 
@@ -18,6 +21,7 @@ namespace EngineX {
         void OnUpdate();
 
         inline OpenGLFrameBuffer& GetFrameBuffer() const { return *m_FrameBuffer; }
+        inline Camera& GetCamera() const { return *m_Camera; }
 
     private:
         Scope<OpenGLFrameBuffer> m_FrameBuffer;
@@ -25,7 +29,10 @@ namespace EngineX {
     private:
         Ref<OpenGLShader> m_Shader;
         Ref<Mesh> m_Mesh;
+        Ref<Camera> m_Camera;
 
+        Ref<Material> m_Material;
+        Ref<DirectionLight> m_DirLight;
     };
 
 }

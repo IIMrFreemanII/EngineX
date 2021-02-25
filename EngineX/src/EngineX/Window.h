@@ -38,6 +38,7 @@ namespace EngineX
 
     private:
         void Shutdown();
+        void ProcessInput();
 
     private:
         GLFWwindow* m_Window;

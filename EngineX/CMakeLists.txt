@@ -35,7 +35,12 @@ set(SOURCE_FILES
         src/Platform/OpenGL/OpenGLVertexArray.h
         src/Platform/OpenGL/OpenGLShader.cpp
         src/Platform/OpenGL/OpenGLShader.h
-        src/EngineX/Scene.cpp src/EngineX/Scene.h src/EngineX/Mesh.h src/EngineX/Vertex.h)
+        src/EngineX/Scene.cpp
+        src/EngineX/Scene.h
+        src/EngineX/Mesh.h
+        src/EngineX/Vertex.h
+        src/EngineX/Camera.h
+        src/EngineX/DirectionLight.h src/EngineX/Material.h)
 
 
 message(STATUS "${PROJECT_NAME} ${CMAKE_CXX_FLAGS}")

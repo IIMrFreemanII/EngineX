@@ -41,7 +41,7 @@ namespace EngineX {
     {
         // handle time
         float currentFrame = glfwGetTime();
-        float deltaTime = currentFrame - m_LastFrameTime;
+        deltaTime = currentFrame - m_LastFrameTime;
         m_LastFrameTime = currentFrame;
         //----------------
 

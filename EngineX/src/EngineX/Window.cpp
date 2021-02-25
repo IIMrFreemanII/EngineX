@@ -7,6 +7,9 @@
 
 namespace EngineX
 {
+    bool firstMouse = true;
+    float lastX;
+    float lastY;
 
     static bool s_GLFWInitialized = false;
 
@@ -20,6 +23,9 @@ namespace EngineX
         m_Props = props;
 
         EX_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
+
+        lastX = (float)props.Width / 2;
+        lastY = (float)props.Height / 2;
 
         if (!s_GLFWInitialized) {
             int success = glfwInit();
@@ -58,6 +64,27 @@ namespace EngineX
 //            glViewport(0, 0, width, height);
 //        });
 
+        glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos) {
+            Camera& camera = Application::Get().GetScene().GetCamera();
+
+            if (firstMouse)
+            {
+                lastX = xPos;
+                lastY = yPos;
+                firstMouse = false;
+            }
+
+            float xoffset = xPos - lastX;
+            float yoffset = lastY - yPos; // reversed since y-coordinates go from bottom to top
+
+            lastX = xPos;
+            lastY = yPos;
+
+            if (glfwGetMouseButton(window, 1) == GLFW_PRESS) {
+                camera.ProcessMouseMovement(xoffset, yoffset);
+            }
+        });
+
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
             WindowProps& props = *(WindowProps*) glfwGetWindowUserPointer(window);
         });
@@ -71,6 +98,8 @@ namespace EngineX
     void Window::OnUpdate()
     {
         EX_PROFILE_FUNCTION();
+
+        ProcessInput();
 
         glfwPollEvents();
         m_Context->SwapBuffers();
@@ -96,6 +125,26 @@ namespace EngineX
         }
 
         m_Props.VSync = enabled;
+    }
+
+    void Window::ProcessInput()
+    {
+        Camera& camera = Application::Get().GetScene().GetCamera();
+        float deltaTime = Application::Get().deltaTime;
+
+        if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+            glfwSetWindowShouldClose(m_Window, true);
+
+        if (glfwGetMouseButton(m_Window, 1) == GLFW_PRESS) {
+            if (glfwGetKey(m_Window, GLFW_KEY_W) == GLFW_PRESS)
+                camera.ProcessKeyboard(FORWARD, deltaTime);
+            if (glfwGetKey(m_Window, GLFW_KEY_S) == GLFW_PRESS)
+                camera.ProcessKeyboard(BACKWARD, deltaTime);
+            if (glfwGetKey(m_Window, GLFW_KEY_A) == GLFW_PRESS)
+                camera.ProcessKeyboard(LEFT, deltaTime);
+            if (glfwGetKey(m_Window, GLFW_KEY_D) == GLFW_PRESS)
+                camera.ProcessKeyboard(RIGHT, deltaTime);
+        }
     }
 
 }

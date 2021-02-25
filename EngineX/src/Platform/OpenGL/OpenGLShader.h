@@ -38,8 +38,8 @@ namespace EngineX {
         std::unordered_map<uint32_t, std::string> PreProcess(const std::string& source);
 
         void Compile(const std::unordered_map<uint32_t, std::string>& shaderSources);
-
         void ExtractUniforms(const std::string& source);
+        uint32_t GetLocation(const std::string& name);
 
     private:
         uint32_t m_RendererID;
